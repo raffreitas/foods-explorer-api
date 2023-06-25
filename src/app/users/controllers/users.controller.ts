@@ -14,6 +14,9 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/app/auth/decorators/roles.decorators';
+import { RolesGuard } from 'src/app/auth/guards/roles.guard';
+import { UserRole } from '../entities/user.entity';
 
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
@@ -21,11 +24,15 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Post()
+    @Roles(UserRole.ADMIN)
+    @UseGuards(RolesGuard)
     create(@Body() createUserDto: CreateUserDto) {
         return this.usersService.store(createUserDto);
     }
 
     @Get()
+    @Roles(UserRole.ADMIN)
+    @UseGuards(RolesGuard)
     findAll() {
         return this.usersService.findAll();
     }
