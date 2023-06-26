@@ -15,9 +15,10 @@ import { ProductsService } from '../services/products.service';
 
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import { Roles } from 'src/app/auth/decorators/roles.decorators';
-import { RolesGuard } from 'src/app/auth/guards/roles.guard';
-import { UserRole } from 'src/app/users/entities/user.entity';
+
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { UserRole } from '../../users/entities/user.entity';
+import { Roles } from '../../auth/decorators/roles.decorators';
 
 @Controller('products')
 @UseGuards(AuthGuard('jwt'))
@@ -27,8 +28,8 @@ export class ProductsController {
     @Post()
     @Roles(UserRole.ADMIN)
     @UseGuards(RolesGuard)
-    create(@Body() createProductDto: CreateProductDto) {
-        return this.productsService.create(createProductDto);
+    create(@Body() body: CreateProductDto) {
+        return this.productsService.create(body);
     }
 
     @Get()
