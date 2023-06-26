@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 
@@ -6,6 +6,7 @@ import { ProductEntity } from '../entities/product.entity';
 
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { MessagesHelper } from '../../../helpers';
 
 @Injectable()
 export class ProductsService {
@@ -15,6 +16,16 @@ export class ProductsService {
     ) {}
 
     async create(data: CreateProductDto) {
+        const alreadyExists = await this.productsRepository.findOne({
+            where: { name: data.name },
+        });
+
+        if (alreadyExists) {
+            throw new BadRequestException(
+                MessagesHelper.PRODUCT_ALREADY_EXISTS,
+            );
+        }
+
         const product = this.productsRepository.create(data);
         return await this.productsRepository.save(product);
     }
