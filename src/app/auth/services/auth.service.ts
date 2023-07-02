@@ -4,7 +4,7 @@ import { compareSync } from 'bcrypt';
 import { UsersService } from '../../users/services/users.service';
 import { UserEntity } from '../../users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { MessagesHelper } from 'src/helpers';
+import { MessagesHelper } from '../../../helpers';
 import { RegisterUserDto } from '../dto/register-user.dto';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class AuthService {
     ) {}
 
     async login(user: UserEntity) {
-        const payload = { sub: user.id, email: user.email, role: user.role };
+        const payload = { sub: user.id, role: user.role };
 
         return {
             access_token: this.jwtService.sign(payload),
