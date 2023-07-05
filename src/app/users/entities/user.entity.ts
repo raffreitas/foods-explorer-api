@@ -1,5 +1,4 @@
 import {
-    BeforeInsert,
     Column,
     CreateDateColumn,
     Entity,
@@ -7,12 +6,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-import { hashSync } from 'bcrypt';
-
-export enum UserRole {
-    ADMIN = 'ADMIN',
-    USER = 'USER',
-}
+import { UserRole } from '../enum/user-role.enum';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -39,9 +33,4 @@ export class UserEntity {
 
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
     updatedAt: Date;
-
-    @BeforeInsert()
-    hashPassword() {
-        this.password = hashSync(this.password, 10);
-    }
 }

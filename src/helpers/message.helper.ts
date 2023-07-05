@@ -5,4 +5,8 @@ export const MessagesHelper = {
     EMAIL_ALREADY_EXISTS: 'E-mail já está em uso.',
     USER_CREATED: 'Usuário criado com sucesso.',
     PRODUCT_ALREADY_EXISTS: 'Já existe um produto com esse mesmo nome.',
+    NOT_FOUND: 'Não encontrado.',
+    INVALID_PASSWORD: 'Senha inválida.',
+    PASSWORD_UPDATED: 'Senha atualizada com sucesso.',
+    USER_UPDATED: 'Usuário atualizado com sucesso.',
 };
